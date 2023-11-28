@@ -1,0 +1,461 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}
+Car details
+{% endblock title %}
+
+{% block content %}
+
+<div style="background-image: url({% static 'images/website_photos/car_detail_background.jpg' %}); background-size: cover; background-position: center; height: 940px;">
+<section class="feature cd-position-relative cd-z-index-1 cd-margin-y-3xl">
+    <div class="cd-container cd-max-width-adaptive-lg">
+        <a onclick="history.back()" style="position: relative; top: 51px;"><button type="button" class="btn btn-outline-warning">Back</button></a>
+        <div class="feature__grid" style="margin-top: 60px;">
+            <div>
+                 <div class="feature__content">
+                    <h1 style="color: #ffbd00">{{ car.brand }} {{ car.model }}</h1>
+                    <h3 style="color: white; font-weight: 400; font-size: 27px;">{{ car.location }}</h3>
+                    <table class="prop-table pv1-width-100%" aria-label="Property Table Example">
+                      <tbody class="prop-table__body" style="color: #fcda7c">
+
+                        <tr class="prop-table__row">
+                          <th class="prop-table__cell prop-table__cell--th">Manufacture date</th>
+                          <td class="prop-table__cell">{{ car.manufacture_date }}</td>
+                        </tr>
+                        <tr class="prop-table__row">
+                          <th class="prop-table__cell prop-table__cell--th">Seats</th>
+                          <td class="prop-table__cell">{{ car.seats }}</td>
+                        </tr>
+                        <tr class="prop-table__row">
+                          <th class="prop-table__cell prop-table__cell--th">Transmission type</th>
+                          <td class="prop-table__cell">{% if car.transmission == 'AT' %}Automatic{% else %}Manual{% endif %}</td>
+                        </tr>
+                        <tr class="prop-table__row">
+                          <th class="prop-table__cell prop-table__cell--th">Minimum driver age</th>
+                          <td class="prop-table__cell">{{ car.min_driver_age }}</td>
+                        </tr>
+                        <tr class="prop-table__row">
+                          <th class="prop-table__cell prop-table__cell--th">Price per day(without discount)</th>
+                          <td class="prop-table__cell">${{ car.price }}</td>
+                        </tr>
+                        <tr class="prop-table__row">
+                          <th class="prop-table__cell prop-table__cell--th">Deposit</th>
+                          <td class="prop-table__cell">${{ car.deposit }}</td>
+                        </tr>
+                        {% if car.discount %}
+                        <tr class="prop-table__row" style="color: #eb4f34; background: #331010;">
+                          <th class="prop-table__cell prop-table__cell--th">Discount</th>
+                          <td class="prop-table__cell">{{ car.discount }}%</td>
+                        </tr>
+                        {% endif %}
+
+                      </tbody>
+                    </table>
+                 </div>
+            </div>
+
+            <div>
+                <figure>
+                    <div id="carouselExample" class="carousel slide">
+
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                              <img class="feature__img" data-img-light src="{{ car.car_exterior_photo.url }}" alt="Image description">
+                            </div>
+
+                            <div class="carousel-item">
+                              <img class="feature__img" data-img-light src="{{ car.car_interior_photo.url }}" alt="Image description">
+                            </div>
+                        </div>
+
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                            <img src="{% static 'images/website_photos/left-arrow.png' %}" style="color: black; transform: scale(1.2); opacity: .5">
+                         </button>
+
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                            <img src="{% static 'images/website_photos/right-arrow.png' %}" style="transform: scale(1.2); opacity: .5">
+                        </button>
+                    </div>
+                </figure>
+                <div class="d-grid gap-2 mt-5">
+                    <a style="height: 60px;" class="btn btn-warning" href="{% url 'main:book_car' car.pk %}?car_id={{ car.pk }}"><h2 style="color: white; font-weight: 450">Book</h2></a>
+                </div>
+            </div>
+
+            <p style="color: white;">{{ car.description }} Can fit {{ car.suitcases }} suitcases.{% if car.guarantee %}
+                The car is guaranteed.{% endif %} You can choose long-distance-travel(<mark>${{ car.long_distance_price }}</mark> at once) package or
+                pay for each kilometre(<mark>${{ car.per_km_price }}</mark> per every kilometre).</p>
+
+        </div>
+    </div>
+</section>
+</div>
+
+<style>
+/* --------------------------------
+
+File#: _1_feature
+Title: Feature
+Descr: Content group containing text + media (img, video, iframe, inline SVG)
+Usage: codyhouse.co/license
+
+-------------------------------- */
+
+/* reset */
+mark {
+    background: #fcda7c;
+    border-radius: 5px;
+}
+
+*, *::after, *::before {
+  box-sizing: border-box;
+}
+
+* {
+  font: inherit;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: hsl(0, 0%, 100%);
+  font-family: system-ui, sans-serif;
+  color: hsl(230, 7%, 23%);
+  font-size: 1.125rem; /* 18px */
+  line-height: 1.4;
+}
+
+h1, h2, h3, h4 {
+  line-height: 1.2;
+  color: white;
+  font-weight: 700;
+}
+
+h1 {
+  font-size: 2.5rem; /* 40px */
+}
+
+h2 {
+  font-size: 2.125rem; /* 34px */
+}
+
+h3 {
+  font-size: 1.75rem; /* 28px */
+}
+
+h4 {
+  font-size: 1.375rem; /* 22px */
+}
+
+ol, ul, menu {
+  list-style: none;
+}
+
+button, input, textarea, select {
+  background-color: transparent;
+  border-radius: 0;
+  color: inherit;
+  line-height: inherit;
+  -webkit-appearance: none;
+          appearance: none;
+}
+
+textarea {
+  resize: vertical;
+  overflow: auto;
+  vertical-align: top;
+}
+
+a {
+  color: hsl(250, 84%, 54%);
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+img, video, svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* --------------------------------
+
+Buttons
+
+-------------------------------- */
+
+.cd-btn {
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375em;
+  font-size: 1em;
+  font-weight: 500;
+  text-decoration: none;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: 0.2s;
+  will-change: transform;
+}
+
+.cd-btn:focus-visible {
+  outline: none;
+}
+
+.cd-btn:active {
+  transform: translateY(2px);
+}
+
+.cd-btn--primary {
+  background: hsl(250, 84%, 54%);
+  box-shadow: inset 0 1px 0 hsla(0, 0%, 100%, 0.15),
+              0 1px 3px hsla(250, 84%, 38%, 0.25),
+              0 2px 6px hsla(250, 84%, 38%, 0.1),
+              0 6px 10px -2px hsla(250, 84%, 38%, 0.25);
+  color: hsl(0, 0%, 100%);
+}
+
+.cd-btn--primary:hover {
+  background: hsl(250, 84%, 60%);
+  box-shadow: inset 0 1px 0 hsla(0, 0%, 100%, 0.15),
+              0 1px 2px hsla(250, 84%, 38%, 0.25),
+              0 1px 4px hsla(250, 84%, 38%, 0.1),
+              0 3px 6px -2px hsla(250, 84%, 38%, 0.25);
+}
+
+.cd-btn--primary:focus-visible {
+  box-shadow: inset 0 1px 0 hsla(0, 0%, 100%, 0.15),
+              0 1px 2px hsla(250, 84%, 38%, 0.25),
+              0 1px 4px hsla(250, 84%, 38%, 0.1),
+              0 3px 6px -2px hsla(250, 84%, 38%, 0.25),
+              0 0 0 2px hsl(0, 0%, 100%),
+              0 0 0 4px hsl(250, 84%, 54%);
+}
+
+/* --------------------------------
+
+Component
+
+-------------------------------- */
+
+.feature {}
+
+.feature__grid {
+  display: grid;
+  gap: 2rem;
+  align-items: center;
+}
+
+.feature__grid > * {
+  min-width: 0;
+}
+
+.feature__content {
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+}
+
+.feature__label {
+  font-size: 0.9375rem;
+  color: hsl(240, 4%, 65%);
+  text-transform: capitalize;
+}
+
+.feature__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+
+.feature--center-x .feature__actions {
+  justify-content: center;
+}
+
+.feature__img {
+  width: 100%;
+  border-radius: 0.75em;
+}
+
+@media (min-width: 64rem) {
+  .feature__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .feature--invert .feature__grid > *:first-child {
+    order: 2;
+  }
+}
+
+/* --------------------------------
+
+Utilities
+
+-------------------------------- */
+
+.cd-container {
+  width: calc(100% - 3rem);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cd-max-width-adaptive-lg {
+  max-width: 32rem;
+}
+
+@media (min-width: 48rem) {
+  .cd-max-width-adaptive-lg {
+    max-width: 48rem;
+  }
+}
+
+@media (min-width: 64rem) {
+  .cd-max-width-adaptive-lg {
+    max-width: 64rem;
+  }
+}
+
+@media (min-width: 80rem) {
+  .cd-max-width-adaptive-lg {
+    max-width: 80rem;
+  }
+}
+
+.cd-position-relative {
+  position: relative;
+}
+
+.cd-z-index-1 {
+  z-index: 1;
+}
+
+.cd-margin-y-2xl {
+  margin-top: 8rem;
+  margin-bottom: 8rem;
+}
+
+.cd-text-center {
+  text-align: center;
+}
+
+.cd-line-height-lg {
+  line-height: 1.58;
+}
+
+.cd-link {
+  color: hsl(250, 84%, 54%);
+  text-decoration: none;
+  background-image: linear-gradient(to right, hsl(250, 84%, 54%) 50%, hsla(250, 84%, 54%, 0.2) 50%);
+  background-size: 200% 1px;
+  background-repeat: no-repeat;
+  background-position: 100% 100%;
+  transition: background-position 0.2s;
+}
+
+.cd-link:hover {
+  background-position: 0% 100%;
+}
+
+textarea {
+  resize: vertical;
+  overflow: auto;
+  vertical-align: top;
+}
+
+a {
+  color: hsl(250, 84%, 54%);
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+img, video, svg {
+  display: block;
+  max-width: 100%;
+}
+
+@media (min-width: 64rem) {
+  body {
+    font-size: 1.25rem;
+  }
+
+  h1 {
+    font-size: 3.051rem;
+  }
+
+    h2 {
+    font-size: 2.44rem;
+  }
+
+    h3 {
+    font-size: 1.75rem;
+  }
+
+    h4 {
+    font-size: 1.5625rem;
+  }
+}
+
+/* variables */
+:root {
+  /* colors */
+  --pv1-color-primary-hsl: 250, 84%, 54%;
+  --pv1-color-bg-hsl: 0, 0%, 100%;
+  --pv1-color-contrast-high-hsl: 230, 7%, 23%;
+  --pv1-color-contrast-higher-hsl: 230, 13%, 9%;
+  --pv1-color-contrast-lower-hsl: 240, 4%, 85%;
+
+  /* spacing */
+  --pv1-space-sm: 0.75rem;
+}
+
+@media(min-width: 64rem){
+  :root {
+    /* spacing */
+    --pv1-space-sm: 1.125rem;
+  }
+}
+
+/* component */
+.prop-table__cell {
+  padding: var(--pv1-space-sm) var(--pv1-space-sm) var(--pv1-space-sm) 0;
+  border-bottom: 1px solid hsl(var(--pv1-color-contrast-lower-hsl));
+  width: 50%;
+}
+
+.prop-table__cell--th {
+  font-weight: bold;
+  text-align: left;
+}
+
+.prop-table--v2 {
+  background-color: hsla(var(--pv1-color-primary-hsl), 0.15);
+  border-left: 4px solid hsl(var(--pv1-color-primary-hsl));
+}
+.prop-table--v2 .prop-table__cell {
+  padding: var(--pv1-space-sm);
+  border-width: 0;
+}
+
+/* utility classes */
+.pv1-width-100\% {
+  width: 100%;
+}
+</style>
+{% endblock content %}

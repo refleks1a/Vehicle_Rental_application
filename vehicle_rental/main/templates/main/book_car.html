@@ -1,0 +1,178 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}
+Book Car
+{% endblock title %}
+
+{% block content %}
+
+<div style="background-image: url({% static 'images/website_photos/car_detail_background.jpg' %}); background-size: cover; background-position: center;">
+<div class="container" style="color: white;">
+  <main>
+    <a onclick="history.back()" style="position: relative; top: 52px; left: 7.5px;"><button type="button" class="btn btn-outline-warning">Back</button></a>
+    <div class="py-5 text-center">
+      <h2 style="color: #ffbd00">{{ car.brand }} {{ car.model }}</h2>
+      <p class="lead" style="color: #ffbd00">Fulfill the form in order to book the car.</p>
+    </div>
+
+    <div class="row g-5">
+      <div class="col-md-5 col-lg-4 order-md-last">
+        <h4 class="d-flex justify-content-between align-items-center mb-3">
+          <span style="color: #ffbd00">Your car</span>
+        </h4>
+        <ul class="list-group mb-3">
+          <li class="list-group-item d-flex justify-content-between lh-sm">
+            <div>
+              <h6 class="my-0">The car</h6>
+              <small class="text-body-secondary">{{ car.brand }} {{ car.model }}</small>
+            </div>
+          </li>
+          <li class="list-group-item d-flex justify-content-between lh-sm">
+            <div>
+              <h6 class="my-0">Manufacture date</h6>
+              <small class="text-body-secondary">{{ car.manufacture_date }}</small>
+            </div>
+          </li>
+          <li class="list-group-item d-flex justify-content-between lh-sm">
+            <div>
+              <h6 class="my-0">Price per day</h6>
+              <small class="text-body-secondary">${{ car.price }}</small>
+            </div>
+          </li>
+          <li class="list-group-item d-flex justify-content-between lh-sm">
+            <div>
+              <h6 class="my-0">Required deposit</h6>
+              <small class="text-body-secondary">${{ car.deposit }}</small>
+            </div>
+          </li>
+           <li class="list-group-item d-flex justify-content-between lh-sm">
+            <div>
+              <h6 class="my-0">Location</h6>
+              <small class="text-body-secondary">{{ car.location }}</small>
+            </div>
+          </li>
+          {% if car.discount %}
+          <li class="list-group-item d-flex justify-content-between bg-body-tertiary">
+            <div class="text-success">
+              <h6 class="my-0">Discount</h6>
+              <small>{{ car.discount }}%</small>
+            </div>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+
+      <div class="col-md-7 col-lg-8">
+        <h4 class="mb-3">Billing address</h4>
+        <form class="needs-validation" method="POST">
+          {% csrf_token %}
+          <div class="row g-3">
+
+            <div class="col-sm-6">
+              <label for="firstName" class="form-label">First name</label>
+              {{ form.customer_name }}
+              <div class="invalid-feedback">
+                Valid first name is required.
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <label for="lastName" class="form-label">Last name</label>
+              {{ form.customer_surname }}
+              <div class="invalid-feedback">
+                Valid last name is required.
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <label for="city" class="form-label">City</label>
+              {{ form.city }}
+              <div class="invalid-feedback">
+                Please enter your shipping address.
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <label for="country" class="form-label">Country</label>
+              {{ form.country }}
+              <div class="invalid-feedback">
+                Please enter your shipping address.
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <label for="state" class="form-label">State</label>
+              {{ form.state }}
+              <div class="invalid-feedback">
+                Valid last name is required.
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <label for="zip" class="form-label">ZIP code</label>
+              {{ form.zip }}
+              <div class="invalid-feedback">
+                Valid last name is required.
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label for="street" class="form-label">Street address</label>
+              {{ form.street }}
+            </div>
+            <div class="col-12">
+              <label for="customer_phone" class="form-label">Phone number : </label>
+              {{ form.customer_phone }}
+            </div>
+            <div>
+              <label for="booked_from" class="form-label">Book from : </label>
+              {{ form.booked_from }}
+            </div>
+            <div>
+              <label for="booked_to" class="form-label">Book to : </label>
+              {{ form.booked_to }}
+            </div>
+            <div class="col-md-5">
+              <label for="milage" class="form-label">Milage</label>
+              {{ form.milage }}
+            </div>
+            <div class="col-md-4">
+              <label for="protection" class="form-label">Protection</label>
+              {{ form.protection }} <a href="{% url 'main:protection_details' %}" style="color: #ffbd00">Details</a>
+            </div>
+          </div>
+
+          <div class="form-check">
+            {{ form.additional_driver }}
+            <label class="form-check-label" for="additional_driver">Additional driver ( + $50 )</label>
+          </div>
+          <div class="form-check">
+            {{ form.infant_seat }}
+            <label class="form-check-label" for="infant_seat">Infant seat ( + $30 )</label>
+          </div>
+          <div class="form-check">
+            {{ form.baby_stroller }}
+            <label class="form-check-label" for="baby_stroller">Baby stroller ( + $30 )</label>
+          </div>
+          <div class="form-check">
+            {{ form.fuel_service }}
+            <label class="form-check-label" for="fuel_service">Fuel service ( + $40 )</label>
+          </div>
+          <div class="col-12 mt-2">
+            <label for="other_information" class="form-label">Other information</label>
+            {{ form.other_information }}
+          </div>
+          <br>
+
+          <button class="w-100 btn btn-warning btn-lg" type="submit">Book</button>
+        </form>
+      </div>
+    </div>
+  </main>
+</div>
+</div>
+
+<style>
+.customer_phone_input {
+    background: red;
+}
+</style>
+
+{% endblock content %}
