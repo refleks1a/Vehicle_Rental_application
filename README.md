@@ -12,5 +12,3 @@ Python, Django, DRF, SQL
 
 Frontend:
 JS, CSS, HTML, BootStrap
-
->3
