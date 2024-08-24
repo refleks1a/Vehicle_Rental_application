@@ -164,3 +164,7 @@ else:
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+DJANGO_SUPERUSER_PASSWORD = config("")
+DJANGO_SUPERUSER_USERNAME = config("")
+DJANGO_SUPERUSER_EMAIL = config("")
