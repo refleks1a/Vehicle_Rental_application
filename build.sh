@@ -9,4 +9,4 @@ pip install -r requirements.txt
 cd vehicle_rental && python manage.py collectstatic --no-input
 
 # Apply any outstanding database migrations
-cd vehicle_rental && python manage.py migrate
+python manage.py migrate
