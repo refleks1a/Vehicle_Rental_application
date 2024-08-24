@@ -1,6 +1,9 @@
 from pathlib import Path
 from decouple import config
 
+import dj_database_url
+import os
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -14,7 +17,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', "vehicle-rental-application.onrender.com"]
+ALLOWED_HOSTS = ['localhost', "127.0.0.1", "vehicle-rental-application.onrender.com"]
 
 
 # Application definition
@@ -48,6 +51,7 @@ AUTH_USER_MODEL = 'custom_auth.CustomUser'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -87,10 +91,11 @@ WSGI_APPLICATION = 'vehicle_rental.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        # Replace this value with your local database's connection string.
+        default='postgresql://postgres:postgres@localhost:5432/mysite',
+        conn_max_age=600
+    )
 }
 
 
@@ -139,37 +144,23 @@ PAYPAL_SECRET = config('PAYPAL_SECRET')
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-    "/var/www/static/",
-]
+if not DEBUG:
+    # Tell Django to copy static assets into a path called `staticfiles` (this is specific to Render)
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    # Enable the WhiteNoise storage backend, which compresses static files to reduce disk use
+    # and renames the files with unique names for each version to support long-term caching
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+# STATICFILES_DIRS = [
+#     BASE_DIR / "static",
+#     "/var/www/static/",
+# ]
+
+# STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
-# Login via Facebook
-# AUTHENTICATION_BACKENDS = [
-#     'social_core.backends.facebook.FacebookOAuth2',
-#
-#     'django.contrib.auth.backends.ModelBackend',
-# ]
-#
-# LOGIN_URL = 'custom_auth:login'
-# LOGIN_REDIRECT_URL = 'main:home'
-# LOGOUT_URL = 'custom_auth:logout'
-# LOGOUT_REDIRECT_URL = 'custom_auth:login'
-#
-#
-# SOCIAL_AUTH_FACEBOOK_KEY = config('SOCIAL_AUTH_FACEBOOK_KEY')
-# SOCIAL_AUTH_FACEBOOK_SECRET = config('SOCIAL_AUTH_FACEBOOK_SECRET')
-#
-# SOCIAL_AUTH_FACEBOOK_EXTRA_DATA = [
-#     'email', 'name', 'password',
-# ]
