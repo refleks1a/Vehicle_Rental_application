@@ -11,7 +11,9 @@ Profile
     <div class="container mt-5" style="display: block; text-align: center;">
         <h1 style="color: #ffbd00">Hi {{ user }}</h1>
         {% if user.email_is_verified %}
-        <h3 class="mt-4" style="color: #b0fa61; font-size: 22.5px; font-weight: 300">Your email is successfully verified</h3>
+        <h3 class="mt-4" style="color: #b0fa61; font-size: 22.5px; font-weight: 300">
+            Your email is successfully verified <b>({{user.email}})</b>
+        </h3>
         {% else %}
         <h3 class="mt-4" style="color: white; font-weight: 400; font-size: 27px;">You need to verify your email</h3>
         <a href="{% url 'custom_auth:verify_email' %}">Verify</a>

@@ -17,7 +17,7 @@ Search results
     <div class="feature-v6__grid">
         {% for car in cars %}
         <div>
-            <a href="{% url 'cars:detail' car.pk %}" style="text-decoration:none;"><img class="feature-v6__img car" src="{{ car.car_exterior_photo.url }}"></a>
+            <a href="{% url 'cars:detail' car.pk %}" style="text-decoration:none;"><img class="feature-v6__img car" src="{{ car.car_exterior_photo.url }}" style="width: 624px; height: 468px;"></a>
             <h4 class="cd-margin-bottom-2xs" style="color: #ffbd00;">{{ car.brand }} {{ car.model }}</h4>
 
             <p class="feature-v6__description cd-margin-bottom-xs" style="color:#ffbd00; font-weight: 300;">{{ car.description }}</p>

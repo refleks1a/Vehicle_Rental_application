@@ -943,3 +943,7 @@ img, video, svg {
     grid-column-end: span 9;
   }
 }
+
+.footer-col {
+    margin-left: 32.5px;
+}
