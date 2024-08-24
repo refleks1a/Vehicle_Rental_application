@@ -93,7 +93,7 @@ WSGI_APPLICATION = 'vehicle_rental.wsgi.application'
 DATABASES = {
     'default': dj_database_url.config(
         # Replace this value with your local database's connection string.
-        default='postgresql://postgres:postgres@localhost:5432/mysite',
+        default='postgresql://admin:hA9vmS0cQ2nEe9xzCVtYAghx5JSIUbWz@dpg-cr4q24lumphs73dra6mg-a/vehicle_rental_db',
         conn_max_age=600
     )
 }
