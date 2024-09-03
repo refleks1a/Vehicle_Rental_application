@@ -83,7 +83,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'vehicle_rental.wsgi.app'
+WSGI_APPLICATION = 'vehicle_rental.wsgi.application'
 
 
 # Database
