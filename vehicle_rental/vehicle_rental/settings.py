@@ -17,8 +17,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', "127.0.0.1", "vehicle-rental-application.onrender.com"]
-
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '.vercel.app']
 
 # Application definition
 
@@ -84,18 +83,17 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'vehicle_rental.wsgi.application'
+WSGI_APPLICATION = 'vehicle_rental.wsgi.app'
 
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(
-        # Replace this value with your local database's connection string.
-        default='postgresql://admin:hA9vmS0cQ2nEe9xzCVtYAghx5JSIUbWz@dpg-cr4q24lumphs73dra6mg-a/vehicle_rental_db',
-        conn_max_age=600
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
 
 
@@ -146,19 +144,19 @@ PAYPAL_SECRET = config('PAYPAL_SECRET')
 
 STATIC_URL = '/static/'
 
-if not DEBUG:
-    # Tell Django to copy static assets into a path called `staticfiles` (this is specific to Render)
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-    # Enable the WhiteNoise storage backend, which compresses static files to reduce disk use
-    # and renames the files with unique names for each version to support long-term caching
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-else:
-    STATIC_ROOT = BASE_DIR / 'staticfiles'
+# if not DEBUG:
+# Tell Django to copy static assets into a path called `staticfiles` (this is specific to Render)
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# Enable the WhiteNoise storage backend, which compresses static files to reduce disk use
+# and renames the files with unique names for each version to support long-term caching
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# else:
+#     STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-    STATICFILES_DIRS = [
-        BASE_DIR / "static",
-        "/var/www/static/",
-    ]
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+    "/var/www/static/",
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
