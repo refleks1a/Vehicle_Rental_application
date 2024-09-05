@@ -10,5 +10,8 @@ Technologies used:
 Backend:
 Python, Django, DRF, SQL
 
+Database:
+PostgreSQL
+
 Frontend:
 JS, CSS, HTML, BootStrap
